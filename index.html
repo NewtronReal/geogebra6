@@ -6,7 +6,7 @@
     <title>Geogebra6</title>
     <script src="https://www.geogebra.org/apps/deployggb.js"></script>
     <script>
-        var params = {algebraInputPosition:"top","appName": "classic", width:800,height:600, "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true,showFullscreenButton:true };
+        var params = {algebraInputPosition:"top","appName": "classic", width:window.innerWidth,height:window.innerHeight, "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true,showFullscreenButton:true };
         var applet = new GGBApplet(params, true);
         window.addEventListener("load", function() {
             applet.inject('ggb-element');
