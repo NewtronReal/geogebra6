@@ -12,10 +12,10 @@
     </style>
     <script src="https://www.geogebra.org/apps/deployggb.js"></script>
     <script>
-        var windowHeight = document.documentElement.clientHeight
-        var windowWidth =  document.documentElement.clientWidth
+        var windowHeight = window.innerHeight
+        var windowWidth =  window.innerWidth
         console.log(windowHeight,windowWidth)
-        var params = {"appName": "classic",scaleContainerClass:"container", "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true };
+        var params = {"appName": "classic",height:windowHeight,width:windowWidth, "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true };
         var applet = new GGBApplet(params, true);
         window.addEventListener("load", function() {
             applet.inject('ggb-element');
