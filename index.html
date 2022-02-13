@@ -6,7 +6,7 @@
     <title>Geogebra6</title>
     <script src="https://www.geogebra.org/apps/deployggb.js"></script>
     <script>
-        var params = {algebraInputPosition:"top","appName": "classic", width:window.innerWidth,height:window.innerHeight, "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true,showFullscreenButton:true };
+        var params = {algebraInputPosition:"algebra","appName": "classic", width:window.innerWidth,height:window.innerHeight, "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true,showFullscreenButton:true };
         var applet = new GGBApplet(params, true);
         window.addEventListener("load", function() {
             applet.inject('ggb-element');
@@ -17,10 +17,70 @@
         })
         var interval = setInterval(function(){
             var target = document.querySelectorAll("textarea")[0]
-            if(target){
+            var input = document.querySelector('div[class="avInputItem"]')
+            var statisfied = {inputNone:false,input:false}
+            if(target && !statisfied.inputNone){
                 target.inputMode = "none"
+                statisfied.inputNone = true
+            }
+            if(input&& !statisfied.input){
+                appendInputObserver(input)
+                statisfied.input = true
             }
         },1000)
+        var keyboardclose = setInterval(function(){
+            var keyboardclose = document.querySelector('div[class="gwt-CustomButton closeTabbedKeyboardButton gwt-CustomButton-up"]')
+            if(keyboardclose){
+                keyboardclose.remove()
+            }
+        },250)
+        function appendObserver(thing){
+            var observer = new MutationObserver(function(mutations){
+                if(thing.querySelector('div[class="elemText scrollableTextBox"]')){
+                    thing.style.position = "absolute";
+                    thing.style.top = "0"
+                    thing.style.backgroundColor = "white";
+                    thing.style.zIndex = "999";
+                }
+                else{
+                    thing.style.position = "relative";
+                    thing.style.top = "";
+                    thing.style.backgroundColor = ""
+                    thing.style.zIndex = "0"
+                }
+            })
+            observer.observe(thing, {attributes:true,subtree:true})
+        }
+        function appendInputObserver(thing){
+            var observer = new MutationObserver(function(mutations){
+                if(thing.querySelector('div[class="gwt-TreeItem newRadioButtonTreeItemParent focused"]')){
+                    thing.style.position = "absolute";
+                    thing.style.top = "0"
+                    thing.style.backgroundColor = "white";
+                    thing.style.zIndex = "999";
+                }
+                else{
+                    thing.style.position = "relative";
+                    thing.style.top = "";
+                    thing.style.backgroundColor = ""
+                    thing.style.zIndex = "0"
+                }
+            })
+            observer.observe(thing, {attributes:true,subtree:true})
+        }
+        var observer = new MutationObserver(function(mutations){
+            for(let mutation of mutations){
+                for(let addedNode of mutation.addedNodes){
+                    if(addedNode.classList && addedNode.classList[0] == "avItem"){
+                        appendObserver(addedNode);
+                    }
+                    if(addedNode.className == "avInputItem"){
+                        appendInputObserver(addedNode)
+                    }
+                }
+            }
+        })
+        observer.observe(document, {childList:true,subtree:true})
     </script>
   </head>
   <body style="padding:0;margin:0;height:100%;">
