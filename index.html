@@ -12,12 +12,9 @@
     </style>
     <script src="https://www.geogebra.org/apps/deployggb.js"></script>
     <script>
-        var windowHeight = window.innerHeight-8
-        var windowWidth =  window.innerWidth
-        console.log(windowHeight,windowWidth)
-        var params = {"appName": "classic",height:windowHeight,width:windowWidth, "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true,showFullscreenButton:true };
-        var applet = new GGBApplet(params, true);
         window.addEventListener("load", function() {
+            var params = {"appName": "classic", width:document.body.width,height:document.body.height, "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true,showFullscreenButton:true };
+            var applet = new GGBApplet(params, true);
             applet.inject('ggb-element');
         });
         var interval = setInterval(function(){
